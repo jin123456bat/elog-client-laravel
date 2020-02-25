@@ -78,19 +78,43 @@ class Client
     }
 
     /**
-     *
+     * 推送SQL日志
+     * @param string $sql
+     * @param float $exectime
      */
-    public function sql_log()
+    public function sql_log(string $sql,float $exectime)
     {
-
+        $this->send([
+            'project' => $this->project,
+            'url' => Utils::getUrl(),
+            'method' => $_SERVER['REQUEST_METHOD'],
+            'header' => json_encode(Utils::getHeaders(),JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES),
+            'cookie' => json_encode($_COOKIE,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES),
+            'session' => json_encode($_SESSION??[],JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES),
+            'server' => json_encode($_SERVER,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES),
+            'params' => json_encode(Utils::getRequestParams(),JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES),
+            'ip' => Utils::getIp(),
+            'sql_string' => $sql,
+            'exectime' => $exectime,
+        ],'/log/sql');
     }
 
     /**
-     *
+     * 推送计划任务日志
+     * @param $command
+     * @param $starttime
+     * @param $endtime
+     * @param $exectime
      */
-    public function cron_log(\Closure $callback)
+    public function cron_log($command,$starttime,$endtime,$exectime)
     {
-
+        $this->send([
+            'project' => $this->project,
+            'starttime' => $starttime,
+            'endtime' => $endtime,
+            'command' => $command,
+            'exectime' => $exectime
+        ],'/log/sql');
     }
 
     /**
