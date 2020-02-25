@@ -1,0 +1,25 @@
+{
+  "name": "jin12345bat/logger",
+  "type": "library",
+  "support": {
+    "email": "326550324@qq.com"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "jincc",
+      "email": "326550324@qq.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Logger\\": "src/"
+    }
+  },
+  "require": {
+    "php": ">=7.0.0",
+    "guzzlehttp/guzzle": "^6.3.3",
+    "filp/whoops": "^2.6@dev"
+  },
+  "minimum-stability": "dev"
+}
